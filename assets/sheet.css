@@ -81,3 +81,22 @@ footer { color: var(--muted); font-size: 13px; padding-top: 12px; padding-bottom
 nav.pager { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 18px 0 8px; font-size: 14px; }
 nav.pager a { color: var(--accent); }
 @media (max-width: 560px) { h1 { font-size: 22px; } td { padding: 4px 8px; } td.wrap { min-width: 13em; } }
+/* Your own matrices (matrix.js) */
+section.calc { margin: 22px 0 8px; }
+section.calc h2 { font-size: 20px; margin: 0 0 4px; }
+section.calc h3 { font-size: 16px; margin: 0 0 6px; }
+.calc-bar { margin: 6px 0 10px; font-size: 14px; }
+.calc-bar select, .calc-size input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; }
+.calc-size input { width: 3.6em; }
+.calc-grids { display: flex; flex-wrap: wrap; gap: 12px; }
+.calc-mat, .calc-out { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; max-width: 100%; box-sizing: border-box; }
+.calc-out { margin-top: 12px; }
+.calc-size { font-size: 14px; margin-bottom: 8px; }
+.calc-wrap { overflow-x: auto; }
+.calc-wrap table { border-collapse: collapse; }
+.calc-wrap td { padding: 2px; border: 0; }
+.calc-mat td input { width: 4.6em; text-align: right; font: inherit; font-variant-numeric: tabular-nums; background: var(--input); color: var(--input-ink); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; }
+.calc-res td { padding: 4px 10px; text-align: right; background: var(--result); font-weight: 600; font-variant-numeric: tabular-nums; }
+.calc-num { font-size: 22px; font-weight: 700; margin: 4px 0; }
+.calc-why { color: var(--red); font-weight: 600; margin: 4px 0; }
+.calc-note { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
