@@ -54,6 +54,8 @@ td.q { background: var(--question); }
 td.num { text-align: right; white-space: nowrap; }
 td.result { background: var(--result); font-weight: 600; }
 td.given { text-align: right; white-space: nowrap; }
+td[data-split] { border-right: 3px solid var(--muted); padding-right: 18px; }
+td[data-split] + td { padding-left: 18px; }
 input[data-in] {
   width: 5.5em; min-height: 34px; padding: 3px 6px; text-align: right; font: inherit; font-variant-numeric: tabular-nums;
   background: var(--input); color: var(--input-ink); border: 1px solid var(--line); border-radius: 6px;
