@@ -124,6 +124,7 @@
   // One operation: a matrix, a number, a list of lines, or the reason it is not defined
   function run(op, a, b, names) {
     const [A, B] = names;
+    const u = A === "K" ? "d" : "x"; // K d = F, the course's letters (user, 2026-11-21)
     const need = (cond, why) => { if (!cond) throw new Error(why); };
     try {
       switch (op) {
@@ -163,19 +164,19 @@
           need(symmetric(a), `${A} is not symmetric. This page finds the eigenvalues of symmetric matrices, like stiffness and mass matrices; make ${A} symmetric first.`);
           return { matrix: eigen(a).map((v) => [v]), note: "The eigenvalues, smallest first." };
         case "solve": {
-          need(square(a), `Not defined: ${A} is ${size(a)}. To solve ${A} x = ${B}, ${A} must be square.`);
+          need(square(a), `Not defined: ${A} is ${size(a)}. To solve ${A} ${u} = ${B}, ${A} must be square.`);
           need(b.length === a.length, `Not defined: ${A} has ${a.length} rows but ${B} has ${b.length}. ${B} needs one row for each row of ${A}.`);
           const e = eliminate(a, b);
           need(!e.singular, `No unique solution: ${A} is singular (its determinant is zero), as for a model without enough supports.`);
-          return { matrix: e.x, note: "x, one column for each column of " + B + "." };
+          return { matrix: e.x, note: `${u}, one column for each column of ${B}.` };
         }
         case "gs": {
-          need(square(a), `Not defined: ${A} is ${size(a)}. To solve ${A} x = ${B}, ${A} must be square.`);
+          need(square(a), `Not defined: ${A} is ${size(a)}. To solve ${A} ${u} = ${B}, ${A} must be square.`);
           need(b.length === a.length && b[0].length === 1, `Not defined: ${B} must be one column with ${a.length} rows, one for each row of ${A}.`);
           need(a.every((row, i) => row[i] !== 0), `Gauss-Seidel cannot start: a number on the diagonal of ${A} is zero.`);
           const g = gaussSeidel(a, b);
           need(g.x !== null, `Gauss-Seidel did not settle in ${g.sweeps} sweeps. It is safe when ${A} is symmetric and positive definite, or when each diagonal number is larger than the rest of its row.`);
-          return { matrix: g.x, note: `x after ${g.sweeps} sweep${g.sweeps > 1 ? "s" : ""}.` };
+          return { matrix: g.x, note: `${u} after ${g.sweeps} sweep${g.sweeps > 1 ? "s" : ""}.` };
         }
         case "chol": {
           need(square(a), `Not defined: ${A} is ${size(a)}. Cholesky needs a square matrix.`);
@@ -212,7 +213,7 @@
     const names = (sec.dataset.names || "A,B").split(",");
     const sizes = (sec.dataset.sizes || "3,3,3,3").split(",").map(Number);
     const el = (tag, cls, text) => { const e = doc.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
-    const label = (op) => OPS[op].label.replace(/\bA\b/g, names[0]).replace(/\bB\b/g, names[1]);
+    const label = (op) => OPS[op].label.replace(/\bA\b/g, names[0]).replace(/\bB\b/g, names[1]).replace(/\bx\b/g, names[0] === "K" ? "d" : "x");
     let op = ops[0];
     const mats = [start(sizes[0], sizes[1], 0), start(sizes[2], sizes[3], 1)];
 
